@@ -1,16 +1,10 @@
 # chat_app
 
-A new Flutter project.
+This app is my first step in using firebase with flutter.
+From this app user can login or register and chat with another user.
 
-## Getting Started
+This app uses Modal progress hud to show the progress bar while logging in.
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Chat App Image for two users:
+-
+![image](https://github.com/Shrouk-Ashraf/chat-app-flutter/assets/68174886/6198230f-9b55-48cb-b84c-93f73b2c0b80)
