@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 class LoginPage extends StatefulWidget {
-  LoginPage({Key? key}) : super(key: key);
+  const LoginPage({Key? key}) : super(key: key);
 
   static String id = 'LoginPage';
 
@@ -23,7 +23,6 @@ class _LoginPageState extends State<LoginPage> {
   GlobalKey<FormState> formKey = GlobalKey();
   bool isLoading = false;
 
-
   @override
   Widget build(BuildContext context) {
     return ModalProgressHUD(
@@ -32,47 +31,60 @@ class _LoginPageState extends State<LoginPage> {
         color: Colors.blue,
       ),
       child: Scaffold(
-        backgroundColor: kPrimaryColor ,
+        backgroundColor: kPrimaryColor,
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8),
           child: Form(
             key: formKey,
             child: ListView(
               children: [
-                const SizedBox(height: 70,),
-                Image.asset('assets/images/scholar_img.png',
-                        height: 100,),
+                const SizedBox(
+                  height: 70,
+                ),
+                Image.asset(
+                  'assets/images/scholar_img.png',
+                  height: 100,
+                ),
                 const Center(
-                  child:  Text("Scholar Chat",
+                  child: Text(
+                    "Scholar Chat",
                     style: TextStyle(
-                      fontFamily: 'Pacifico',
-                      color: Colors.white,
-                      fontSize: 20
-                    ),
+                        fontFamily: 'Pacifico',
+                        color: Colors.white,
+                        fontSize: 20),
                   ),
                 ),
-                const SizedBox(height: 70,),
-                const Text("LOGIN",
+                const SizedBox(
+                  height: 70,
+                ),
+                const Text(
+                  "LOGIN",
                   style: TextStyle(
-                      color: Colors.white,
+                    color: Colors.white,
                   ),
                 ),
-                const SizedBox(height: 10,),
+                const SizedBox(
+                  height: 10,
+                ),
                 CustomTextFormField(
                   labelText: "Email",
-                  onChanged: (value){
+                  onChanged: (value) {
                     email = value;
                   },
                 ),
-                const SizedBox(height: 10,),
+                const SizedBox(
+                  height: 10,
+                ),
                 CustomTextFormField(
                   isObscureText: true,
                   labelText: "Password",
-                  onChanged: (value){
-                       password = value;
+                  onChanged: (value) {
+                    password = value;
                   },
                 ),
-                const SizedBox(height: 10,),
+                const SizedBox(
+                  height: 10,
+                ),
                 CustomButton(
                   buttonText: "Login",
                   onTap: () async {
@@ -81,20 +93,23 @@ class _LoginPageState extends State<LoginPage> {
                         setState(() {
                           isLoading = true;
                         });
-                          await signInUser();
-                          Navigator.pushNamed(context, ChatPage.id, arguments: email);
+                        await signInUser();
+                        Navigator.pushNamed(context, ChatPage.id,
+                            arguments: email);
                       }
                     } on FirebaseAuthException catch (e) {
                       print(e.toString());
                       if (e.code == 'user-not-found') {
-                        showSnackBar(context, message: 'No user found for that email.');
+                        showSnackBar(context,
+                            message: 'No user found for that email.');
                       } else if (e.code == 'ERROR_WRONG_PASSWORD') {
-                        showSnackBar(context, message: 'Wrong password provided for that user.');
-                      }else if (e.code =='invalid-credential'){
-                        showSnackBar(context, message: 'Invalid email address or password');
+                        showSnackBar(context,
+                            message: 'Wrong password provided for that user.');
+                      } else if (e.code == 'invalid-credential') {
+                        showSnackBar(context,
+                            message: 'Invalid email address or password');
                       }
-
-                    }catch(e){
+                    } catch (e) {
                       print(e.toString());
                     }
                     setState(() {
@@ -105,26 +120,25 @@ class _LoginPageState extends State<LoginPage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text("don't have an account ?",
-                        style: TextStyle(
-                          color: Colors.white,
-                        ),
+                    const Text(
+                      "don't have an account ?",
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
                     ),
                     TextButton(
-                        onPressed: (){
-                          Navigator.pushNamed(context, RegisterPage.id);
-                        },
-                        child: Text("Register",
-                          style: TextStyle(
-                            color: kSecondaryColor,
-                          ),
+                      onPressed: () {
+                        Navigator.pushNamed(context, RegisterPage.id);
+                      },
+                      child: Text(
+                        "Register",
+                        style: TextStyle(
+                          color: kSecondaryColor,
                         ),
-
+                      ),
                     )
-
                   ],
                 )
-
               ],
             ),
           ),
@@ -133,10 +147,8 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-
   Future<void> signInUser() async {
-    final credential = await FirebaseAuth.instance
-        .signInWithEmailAndPassword(
+    final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
       email: email!,
       password: password!,
     );
