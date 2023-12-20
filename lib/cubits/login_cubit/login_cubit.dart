@@ -1,4 +1,3 @@
-import 'package:chat_app/helper/show_snack_bar.dart';
 import 'package:chat_app/services/login_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

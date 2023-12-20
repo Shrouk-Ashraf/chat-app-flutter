@@ -24,7 +24,6 @@ class LoginPage extends StatelessWidget {
     return BlocListener<LoginCubit, LoginState>(
       listener: (context, state) {
         if (state is LoginLoading) {
-          print('in loading');
           isLoading = true;
         } else if (state is LoginSuccess) {
           isLoading = false;

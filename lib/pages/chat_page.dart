@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:chat_app/constants.dart';
 import 'package:chat_app/models/message_model.dart';
 import 'package:flutter/material.dart';
@@ -14,33 +12,34 @@ class ChatPage extends StatelessWidget {
   TextEditingController controller = TextEditingController();
   ScrollController scrollController = ScrollController();
   CollectionReference messages =
-                  FirebaseFirestore.instance.collection(kMessagesCollection);
+      FirebaseFirestore.instance.collection(kMessagesCollection);
   String? message;
 
   @override
   Widget build(BuildContext context) {
     var email = ModalRoute.of(context)!.settings.arguments;
     return StreamBuilder<QuerySnapshot>(
-        stream: messages.orderBy(kCreatedAtKey,descending: true).snapshots(),
-        builder: (context,snapshot){
-          if(snapshot.hasData){
+        stream: messages.orderBy(kCreatedAtKey, descending: true).snapshots(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
             List<MessageModel> messagesList = [];
-            for(int i =0; i < snapshot.data!.docs.length; i++ ){
+            for (int i = 0; i < snapshot.data!.docs.length; i++) {
               messagesList.add(MessageModel.fromJson(snapshot.data!.docs[i]));
             }
-           return Scaffold(
+            return Scaffold(
               appBar: AppBar(
                 automaticallyImplyLeading: false,
                 backgroundColor: kPrimaryColor,
                 title: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Image.asset(kLogo,
-                      height: 45,),
-                    Text('Chat',
-                      style: TextStyle(
-                          color: Colors.white
-                      ),
+                    Image.asset(
+                      kLogo,
+                      height: 45,
+                    ),
+                    Text(
+                      'Chat',
+                      style: TextStyle(color: Colors.white),
                     ),
                   ],
                 ),
@@ -50,33 +49,32 @@ class ChatPage extends StatelessWidget {
                 children: [
                   Expanded(
                     child: ListView.builder(
-                      reverse: true,
-                      controller: scrollController,
-                      itemCount: messagesList.length,
-                        itemBuilder: (context, index){
+                        reverse: true,
+                        controller: scrollController,
+                        itemCount: messagesList.length,
+                        itemBuilder: (context, index) {
                           return ChatBubble(
                             message: messagesList[index],
                             isSender: email == messagesList[index].senderEmail,
                           );
-                        }
-                    ),
+                        }),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(16),
                     child: TextField(
                       controller: controller,
-                      onChanged: (data){
+                      onChanged: (data) {
                         message = data;
                       },
                       cursorColor: kPrimaryColor,
                       decoration: InputDecoration(
                         suffixIcon: IconButton(
-                          onPressed: (){
-                            if(message != null) {
+                          onPressed: () {
+                            if (message != null) {
                               messages.add({
                                 kMessageKey: message,
-                                kCreatedAtKey : DateTime.now(),
-                                kSenderEmailKey : email,
+                                kCreatedAtKey: DateTime.now(),
+                                kSenderEmailKey: email,
                               });
                               controller.clear();
                               message = null;
@@ -97,22 +95,16 @@ class ChatPage extends StatelessWidget {
                         ),
                         focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(18),
-                            borderSide: BorderSide(color: kPrimaryColor)
-                        ),
+                            borderSide: BorderSide(color: kPrimaryColor)),
                       ),
                     ),
                   ),
                 ],
               ),
             );
-          }else{
-            return ModalProgressHUD(
-                inAsyncCall: true,
-                child: Scaffold());
+          } else {
+            return ModalProgressHUD(inAsyncCall: true, child: Scaffold());
           }
-        }
-    );
+        });
   }
 }
-
-
