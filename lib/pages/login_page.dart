@@ -104,8 +104,10 @@ class _LoginPageState extends State<LoginPage> {
                   CustomButton(
                     buttonText: "Login",
                     onTap: () {
-                      BlocProvider.of<LoginCubit>(context)
-                          .loginUser(email: email!, password: password!);
+                      if (formKey.currentState!.validate()) {
+                        BlocProvider.of<LoginCubit>(context)
+                            .loginUser(email: email!, password: password!);
+                      }
                     },
                   ),
                   Row(
