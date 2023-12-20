@@ -14,12 +14,13 @@ class RegisterCubit extends Cubit<RegisterState> {
       await RegisterService().registerUser(email: email, password: password);
       emit(RegisterSuccess());
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') {
-        emit(
-            RegisterFailure(errorMessage: 'Invalid email address or password'));
-      } else if (e.code == 'email-already-in-use') {
-        RegisterFailure(
-            errorMessage: 'The account already exists for that email.');
+      if (e.code == 'email-already-in-use') {
+        emit(RegisterFailure(
+            errorMessage: 'The account already exists for that email.'));
+      } else if (e.code == 'weak-password') {
+        emit(RegisterFailure(
+            errorMessage:
+                'weak password :[Password should be at least 6 characters]'));
       }
     } catch (e) {
       emit(RegisterFailure(errorMessage: e.toString()));
