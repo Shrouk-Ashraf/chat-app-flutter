@@ -26,7 +26,7 @@ class ChatApp extends StatelessWidget {
         LoginPage.id: (context) {
           return BlocProvider(
             create: (context) => LoginCubit(),
-            child: const LoginPage(),
+            child: LoginPage(),
           );
         },
         RegisterPage.id: (context) => RegisterPage(),
