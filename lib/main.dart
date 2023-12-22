@@ -1,3 +1,4 @@
+import 'package:chat_app/cubits/chat_cubit/chat_cubit.dart';
 import 'package:chat_app/cubits/login_cubit/login_cubit.dart';
 import 'package:chat_app/cubits/register_cubit/register_cubit.dart';
 import 'package:chat_app/pages/chat_page.dart';
@@ -34,7 +35,10 @@ class ChatApp extends StatelessWidget {
               create: (context) => RegisterCubit(),
               child: RegisterPage(),
             ),
-        ChatPage.id: (context) => ChatPage(),
+        ChatPage.id: (context) => BlocProvider(
+              create: (context) => ChatCubit(),
+              child: ChatPage(),
+            ),
       },
       initialRoute: LoginPage.id,
     );
