@@ -19,18 +19,21 @@ class ChatCubit extends Cubit<ChatState> {
         kCreatedAtKey: DateTime.now(),
         kSenderEmailKey: email,
       });
+
+      print("Message sent");
     }
   }
 
   getMessages() {
-    List<MessageModel> messagesList = [];
     messages
         .orderBy(kCreatedAtKey, descending: true)
         .snapshots()
         .listen((event) {
+      List<MessageModel> messagesList = [];
       for (var doc in event.docs) {
-        messagesList.add(MessageModel.fromJson(doc.data()));
+        messagesList.add(MessageModel.fromJson(doc));
       }
+      print('Show messages done');
       emit(ChatSendingSuccess(messagesList: messagesList));
     });
   }

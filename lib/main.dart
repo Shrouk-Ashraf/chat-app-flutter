@@ -28,15 +28,15 @@ class ChatApp extends StatelessWidget {
         LoginPage.id: (context) {
           return BlocProvider(
             create: (context) => LoginCubit(),
-            child: LoginPage(),
+            child: const LoginPage(),
           );
         },
         RegisterPage.id: (context) => BlocProvider(
               create: (context) => RegisterCubit(),
-              child: RegisterPage(),
+              child: const RegisterPage(),
             ),
         ChatPage.id: (context) => BlocProvider(
-              create: (context) => ChatCubit(),
+              create: (context) => ChatCubit()..getMessages(),
               child: ChatPage(),
             ),
       },
